@@ -65,7 +65,7 @@ module ActiveHash
 
           klass = options[:class_name].constantize
 
-          if ActiveRecord.const_defined?(:Relation) && klass.all.class < ActiveRecord::Relation
+          if ActiveRecord.const_defined?(:Relation) && klass < ActiveRecord::Relation
             klass.where(options[:foreign_key] => id)
           elsif klass.respond_to?(:scoped)
             klass.scoped(:conditions => {options[:foreign_key] => id})

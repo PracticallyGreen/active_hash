@@ -72,6 +72,13 @@ describe ActiveHash::Base, "associations" do
         author = Author.create :id => 1
         author.books.published.should == [@included_book_1]
       end
+
+      it "only uses 1 query" do
+        Author.has_many :books
+        author = Author.create :id => 1
+        Book.should_receive(:find_by_sql)
+        author.books.to_a
+      end
     end
 
     context "with ActiveHash children" do
